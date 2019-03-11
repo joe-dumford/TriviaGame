@@ -21,7 +21,7 @@ $(document).ready(function() {
 const giphy = {
     search: (searchTerm) => {
         let p = new Promise((resolve, reject) => {
-            $.get(`http://api.giphy.com/v1/gifs/search?q=${searchTerm.toLowerCase().replace(' ','+')}&api_key=LHRI5kC51qzijUd7112IVGYh11oo2wSf&limit=1`)
+            $.get(`https://api.giphy.com/v1/gifs/search?q=${searchTerm.toLowerCase().replace(' ','+')}&api_key=LHRI5kC51qzijUd7112IVGYh11oo2wSf&limit=1`)
             .then( (response) => {
                 resolve(response.data[0].images.fixed_height.url);
             });
@@ -99,6 +99,7 @@ let trivia = {
         trivia.gifSearchTerms.forEach((item, index) => {
             item = item.toLowerCase().replace(' ','+');
             giphy.search(item).then((giphyUrl) => {
+                
                 trivia.gifs[index]= giphyUrl;
             });
         });
