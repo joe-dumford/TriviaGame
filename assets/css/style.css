@@ -1,0 +1,31 @@
+body {
+    background-image: url('/Users/josephdumford/Homework/TriviaGame/assets/images/rockers.jpg');
+    text-align: center;
+}
+
+h1 {
+    color: rebeccapurple;
+    font-family: 'Indie Flower'; 
+}
+
+#question {
+    font-family: 'Shadows Into Light';
+}
+
+#results {
+    min-height: 60px;
+}
+
+.jumbotron {
+    background-color: darkcyan;
+    margin: 100px;
+}
+
+/* using visibility over display to prevent html elements jumping */
+#remaining-time {
+    visibility: hidden;
+}
+
+#remaining-time .timer-active {
+    visibility: visible;
+}
