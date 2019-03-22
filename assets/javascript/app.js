@@ -1,9 +1,6 @@
-//THINGS THAT NEED FIXING
-//1.String giving the correct answer, when wrong answer is chosen, doesn't disappear when the next question's generated
-//2.If answer is selected in the final seconds of countdown the timer breaks (regardless of answer choice)
-        //additionally if timer is allowed to runout the timer breaks
-//3. In an attempt to fix 1 & 2, I created more problems and now the timer doesn't display
-
+//Things that need fixing
+    //1. Final scorecard not displaying at the end of the quiz
+    
 //ADDITIONAL FUN THINGS TO ADD
 //1. Victory Song at end with results page
 //2. Song of defeat if player get 4 or less questions correct
