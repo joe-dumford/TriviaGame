@@ -23,7 +23,7 @@ h1 {
 
 /* using visibility over display to prevent html elements jumping */
 #remaining-time {
-    visibility: hidden;
+    visibility: visible
 }
 
 #remaining-time .timer-active {

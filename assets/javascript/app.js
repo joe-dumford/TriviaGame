@@ -1,5 +1,5 @@
 //THINGS THAT NEED FIXING
-//1.String giving the correct answer when wrong answer is chosen doesn't disappear when the next question's generated
+//1.String giving the correct answer, when wrong answer is chosen, doesn't disappear when the next question's generated
 //2.If answer is selected in the final seconds of countdown the timer breaks (regardless of answer choice)
         //additionally if timer is allowed to runout the timer breaks
 //3. In an attempt to fix 1 & 2, I created more problems and now the timer doesn't display
@@ -11,7 +11,7 @@
 
 
 $(document).ready(function() {
-    $("remaining-time").hide();
+    $("#remaining-time").hide();
     //On Click Listener for User to Press Start Button
     $("#start").on('click', trivia.startGame);
     $(document).on('click', '.option', trivia.guessCheck);
@@ -21,7 +21,7 @@ $(document).ready(function() {
 const giphy = {
     search: (searchTerm) => {
         let p = new Promise((resolve, reject) => {
-            $.get(`https://api.giphy.com/v1/gifs/search?q=${searchTerm.toLowerCase().replace(' ','+')}&api_key=LHRI5kC51qzijUd7112IVGYh11oo2wSf&limit=1`)
+            $.get(`https://api.giphy.com/v1/gifs/search?q=${searchTerm.toLowerCase().replace(' ','+')}&api_key=1ons7mUBGe3TNiGNhNR3ZaFADbDXjJig`)
             .then( (response) => {
                 resolve(response.data[0].images.fixed_height.url);
             });
@@ -120,8 +120,8 @@ let trivia = {
         //Hide Start Button
         $('#start').hide();
         //Show Remaining Time
-        // $('#remaining-time').show();
-        $('#remaining-time').addClass('timer-active');
+        $('#remaining-time').show();
+        //$('#remaining-time').addClass('timer-active');
         //Ask Question
         trivia.nextQuestion();
     },
@@ -155,7 +155,7 @@ let trivia = {
             $('#timer').text(trivia.timer);
             trivia.timer--;
             if (trivia.timer === 4) {
-                $('timer').addClass('last-seconds');
+                $('#timer').addClass('last-seconds');
             }
         }
         //Time ran out and unanswered gets incremented by one
@@ -164,7 +164,7 @@ let trivia = {
             trivia.result = false;
             clearInterval(trivia.timerId);
             resultId = setTimeout(trivia.guessResult, 1000);
-            $('results').html("<h3>Time's Up! The answer was  " + Object.values(trivia.answers)[trivia.currentSet] + "</h3>");
+            $('#results').html("<h3>Time's Up! The answer was  " + Object.values(trivia.answers)[trivia.currentSet] + "</h3>");
         } 
         else if (trivia.currentSet === Object.keys(trivia.questions).length) {
 
@@ -193,7 +193,8 @@ let trivia = {
 
             //Adding to correct answers
             trivia.correct++;
-            
+           
+           
             //Setting time the gif will run
             resultId = setTimeout(trivia.guessResult, 4500)
             
@@ -205,6 +206,7 @@ let trivia = {
             $(this).addClass('btn-danger').removeClass('btn-info');
 
             trivia.incorrect++;
+            
             //commenting this out keeps the timer moving when wrong answer chosen -> clearInterval(trivia.timerId);
             resultId = setTimeout(trivia.guessResult, 4500)
             let wrongAnswer = `<h3>The answer was ${currentAnswer} </h3>`;
@@ -218,9 +220,12 @@ let trivia = {
 
         $('.option').remove();
         $('#results img').remove();
+        $('#results h3').remove();
+       
 
         trivia.nextQuestion();
     }
 
 };
+
 
