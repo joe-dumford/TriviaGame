@@ -1,10 +1,7 @@
-//Things that need fixing
-    //1. Final scorecard not displaying at the end of the quiz
-    //2. When wrong answer is selected the timer stops
 //ADDITIONAL FUN THINGS TO ADD
 //1. Victory Song at end with results page
 //2. Song of defeat if player get 4 or less questions correct
-//3. Start gif at load screen
+
 
 
 $(document).ready(function() {

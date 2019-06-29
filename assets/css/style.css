@@ -28,8 +28,8 @@ h1 {
     background-color: rgb(89, 30, 148);
     border-color: goldenrod;
     color: goldenrod;
-    
 }
+
 
 /* using visibility over display to prevent html elements jumping */
 #remaining-time {
