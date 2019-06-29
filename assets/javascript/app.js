@@ -4,21 +4,21 @@
 
 
 
-$(document).ready(function() {
+$(document).ready(function () {
     $("#remaining-time").hide();
     //On Click Listener for User to Press Start Button
     $("#start").on('click', trivia.startGame);
     $(document).on('click', '.option', trivia.guessCheck);
-    
+
 });
 
 const giphy = {
     search: (searchTerm) => {
         let p = new Promise((resolve, reject) => {
             $.get(`https://api.giphy.com/v1/gifs/search?q=${searchTerm.toLowerCase().replace(' ','+')}&api_key=1ons7mUBGe3TNiGNhNR3ZaFADbDXjJig`)
-            .then( (response) => {
-                resolve(response.data[0].images.fixed_height.url);
-            });
+                .then((response) => {
+                    resolve(response.data[0].images.fixed_height.url);
+                });
         })
         return p;
     }
@@ -54,7 +54,7 @@ let trivia = {
         q3: ['Kurt Cobain', 'Jim Morrison', 'Duane Allman', 'Jimi Hendrix'],
         q4: ['Chris Robinson', 'Eddie Veddar', 'Willie Nelson', 'Gene Simmons'],
         q5: ['Pearl Jam', 'Guns N Roses', 'Rage Against The Machine', ' Black Sabbath'],
-        q6: ['Jimmy Page','Eric Clapton','George Harrison','Keith Richards'],
+        q6: ['Jimmy Page', 'Eric Clapton', 'George Harrison', 'Keith Richards'],
         q7: ['Led Zeppelin', 'The Beatles', 'Guns N Roses', 'Nirvana'],
         q8: ['Retail Clerk', 'Factory Worker', 'Coal Miner', 'Burglar'],
         q9: ['Eric Clapton', 'Tony Iommi', 'Eddie Van Halen', 'Ronnie Van Zant'],
@@ -88,13 +88,13 @@ let trivia = {
     gifs: [],
 
     //Initialize Game Method
-    startGame: function(){
-        
+    startGame: function () {
+
         trivia.gifSearchTerms.forEach((item, index) => {
             item = item.toLowerCase().replace(' ', '+');
             giphy.search(item).then((giphyUrl) => {
-                
-                trivia.gifs[index]= giphyUrl;
+
+                trivia.gifs[index] = giphyUrl;
             });
         });
 
@@ -120,7 +120,7 @@ let trivia = {
         trivia.nextQuestion();
     },
 
-    nextQuestion : function(){
+    nextQuestion: function () {
         //Setting Time per Question
         trivia.timer = 10;
         $('#timer').removeClass('last-seconds');
@@ -143,9 +143,9 @@ let trivia = {
         })
     },
     //Decrementing counter & mark question unanswered if time runs out.
-    timerRunning : function(){
+    timerRunning: function () {
 
-        if (trivia.timer > -1 && trivia.currentSet < Object.keys(trivia.questions).length){
+        if (trivia.timer > -1 && trivia.currentSet < Object.keys(trivia.questions).length) {
             $('#timer').text(trivia.timer);
             trivia.timer--;
             if (trivia.timer === 4) {
@@ -159,8 +159,7 @@ let trivia = {
             clearInterval(trivia.timerId);
             resultId = setTimeout(trivia.guessResult, 1000);
             $('#results').html("<h3>Time's Up! The answer was  " + Object.values(trivia.answers)[trivia.currentSet] + "</h3>");
-        } 
-        else if (trivia.currentSet === Object.keys(trivia.questions).length) {
+        } else if (trivia.currentSet === Object.keys(trivia.questions).length) {
 
             //Pushes results of game to the page
             $('#results')
@@ -172,7 +171,7 @@ let trivia = {
 
             $('#game').hide();
             $('#start').show();
-        
+
         }
     },
 
@@ -187,22 +186,21 @@ let trivia = {
 
             //Adding to correct answers
             trivia.correct++;
-           
+
             //Setting time the gif will run
             resultId = setTimeout(trivia.guessResult, 4500)
-            
+
             let htmlString = `<img src="${trivia.gifs[trivia.currentSet]}" />`;
-            $('#results').html(htmlString);    
-        } 
-        else {
+            $('#results').html(htmlString);
+        } else {
             $(this).addClass('btn-danger').removeClass('btn-info');
 
             trivia.incorrect++;
-            
+
             //commenting this out keeps the timer moving when wrong answer chosen -> clearInterval(trivia.timerId);
             resultId = setTimeout(trivia.guessResult, 4500)
             let wrongAnswer = `<h3>The answer was ${currentAnswer} </h3>`;
-            $('#results').html(wrongAnswer);  //This line doesn't disappear
+            $('#results').html(wrongAnswer); //This line doesn't disappear
         }
     },
 
@@ -213,11 +211,9 @@ let trivia = {
         $('.option').remove();
         $('#results img').remove();
         $('#results h3').remove();
-       
+
 
         trivia.nextQuestion();
     }
 
 };
-
-

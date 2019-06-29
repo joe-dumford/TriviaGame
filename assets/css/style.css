@@ -12,9 +12,19 @@ h1 {
     font-family: 'Shadows Into Light';
 }
 
-#results {
+#results{
+    min-height: 60px;
+
+}
+
+img{
+    margin-bottom: 20px;
+    border-style: groove;
+    border-width: 5px;
+    border-color:goldenrod;
     min-height: 60px;
 }
+
 
 .jumbotron {
     background-color: rgba(17, 123, 123, 0.954);
@@ -42,5 +52,5 @@ h1 {
 
 .last-seconds{
     color:rgb(176, 2, 2);
-   
 }
+
