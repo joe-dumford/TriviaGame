@@ -1,6 +1,6 @@
 //Things that need fixing
     //1. Final scorecard not displaying at the end of the quiz
-    
+    //2. When wrong answer is selected the timer stops
 //ADDITIONAL FUN THINGS TO ADD
 //1. Victory Song at end with results page
 //2. Song of defeat if player get 4 or less questions correct
@@ -94,7 +94,7 @@ let trivia = {
     startGame: function(){
         
         trivia.gifSearchTerms.forEach((item, index) => {
-            item = item.toLowerCase().replace(' ','+');
+            item = item.toLowerCase().replace(' ', '+');
             giphy.search(item).then((giphyUrl) => {
                 
                 trivia.gifs[index]= giphyUrl;
@@ -194,7 +194,6 @@ let trivia = {
            
             //Setting time the gif will run
             resultId = setTimeout(trivia.guessResult, 4500)
-            
             
             let htmlString = `<img src="${trivia.gifs[trivia.currentSet]}" />`;
             $('#results').html(htmlString);    
