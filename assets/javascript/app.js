@@ -121,7 +121,7 @@ let trivia = {
     },
 
     nextQuestion : function(){
-        //Set Timer to Specified Time per Question
+        //Setting Time per Question
         trivia.timer = 10;
         $('#timer').removeClass('last-seconds');
         $('#timer').text(trivia.timer);
@@ -142,7 +142,7 @@ let trivia = {
             $('#options').append($('<button class="option btn btn-info btn-lg">' + key + '</button>'));
         })
     },
-    //Method to decrement counter & count unanswered if time's up.
+    //Decrementing counter & mark question unanswered if time runs out.
     timerRunning : function(){
 
         if (trivia.timer > -1 && trivia.currentSet < Object.keys(trivia.questions).length){
@@ -187,7 +187,6 @@ let trivia = {
 
             //Adding to correct answers
             trivia.correct++;
-           
            
             //Setting time the gif will run
             resultId = setTimeout(trivia.guessResult, 4500)

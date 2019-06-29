@@ -24,7 +24,7 @@ h1 {
     margin: 100px;
 }
 
-#start{
+.btn{
     background-color: rgb(89, 30, 148);
     border-color: goldenrod;
     color: goldenrod;
@@ -38,4 +38,9 @@ h1 {
 
 #remaining-time .timer-active {
     visibility: visible;
+}
+
+.last-seconds{
+    color:rgb(176, 2, 2);
+   
 }
