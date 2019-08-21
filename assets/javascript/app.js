@@ -6,7 +6,6 @@ $(document).ready(function () {
     $("#remaining-time").hide();
     $("#start").on('click', trivia.startGame);
     $(document).on('click', '.option', trivia.guessCheck);
-
 });
 
 const giphy = {
@@ -27,7 +26,7 @@ let trivia = {
     incorrect: 0,
     unanswered: 0,
     currentSet: 0,
-    timer: 0,
+    timer: 10,
     timerOn: false,
     timerId: '',
 
@@ -84,7 +83,6 @@ let trivia = {
     ],
     gifs: [],
 
-/////////////////////////////////////////////////////////////////
     //Initialize Game Method
     startGame: function () {
         trivia.gifSearchTerms.forEach((item, index) => {
@@ -122,7 +120,6 @@ let trivia = {
         //Preventing Timer Speed Up
         if (!trivia.timerOn) {
             trivia.timerId = setInterval(trivia.timerRunning, 1000);
-            trivia.timerOn = true;
         }
         //Collects questions then writes current question
         let questionContent = Object.values(trivia.questions)[trivia.currentSet];
@@ -135,7 +132,7 @@ let trivia = {
         })
     },
     timerRunning: function () {
-        if (trivia.timer > -1 && trivia.currentSet < Object.keys(trivia.questions).length) {
+        if (trivia.timer > -1 && trivia.currentSet < Object.keys(trivia.questions).length){
             $('#timer').text(trivia.timer);
             trivia.timer--;
             if (trivia.timer === 2) {
@@ -146,18 +143,18 @@ let trivia = {
         else if (trivia.timer === -1) {
             trivia.unanswered++;
             trivia.result = false;
-            // clearInterval(trivia.timerId);
+            clearInterval(trivia.timerId);
             resultId = setTimeout(trivia.guessResult, 1000);
-            $('#results').html("<h3>Time's Up! The answer was  " + Object.values(trivia.answers)[trivia.currentSet] + "</h3>");
+            $('#results').html("<h3>Time's Up!</h3>");
         }
-        else if (trivia.currentSet === Object.keys(trivia.questions).length) {
+        else if (trivia.currentSet === Object.keys(trivia.questions).length){
             //Pushes results of game to the page
             $('#results')
                 .html('<h3>Thanks for playing!</h3>' +
                     '<p>Correct: ' + trivia.correct + '</p>' +
                     '<p>Incorrect: ' + trivia.incorrect + '</p>' +
                     '<p>Unaswered: ' + trivia.unanswered + '</p>' +
-                    '<p>Please play again!</p>');
+                    '<p>Want to play again?</p>');
             $('#game').hide();
             $('#start').show();
         }
@@ -170,27 +167,26 @@ let trivia = {
             $(this).addClass('btn-success').removeClass('btn-info');
             //Incrementing correct answers
             trivia.correct++;
+            clearInterval(trivia.timerId);
             //Setting time the gif will run
-            resultId = setTimeout(trivia.guessResult, 4500)
+            resultId = setTimeout(trivia.guessResult, 3500)
             let htmlString = `<img src="${trivia.gifs[trivia.currentSet]}" />`;
             $('#results').html(htmlString);
         } else {
             $(this).addClass('btn-danger').removeClass('btn-info');
             trivia.incorrect++;
+            clearInterval(trivia.timerId);
             resultId = setTimeout(trivia.guessResult, 4500)
             let wrongAnswer = `<h3>The answer was ${currentAnswer} </h3>`;
             $('#results').html(wrongAnswer); 
         }
     },
 
-    guessResult: function () {
-        if(trivia.timer === -1) {
+    guessResult: function (){
             trivia.currentSet++;
             $('.option').remove();
             $('#results img').remove();
             $('#results h3').remove();
             trivia.nextQuestion();
-        }
     }
-
 };

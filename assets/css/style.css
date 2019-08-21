@@ -14,7 +14,6 @@ h1 {
 
 #results{
     min-height: 60px;
-
 } 
 
  img{
@@ -24,7 +23,6 @@ h1 {
     border-color:goldenrod;
     min-height: 60px;
 }
-
 
 .jumbotron {
     background-color: rgba(17, 123, 123, 0.954);
@@ -38,8 +36,8 @@ h1 {
     background-color: rgb(89, 30, 148);
     border-color: goldenrod;
     color: goldenrod;
+    margin: 5px;
 }
-
 
 /* using visibility over display to prevent html elements jumping */
 #remaining-time {
