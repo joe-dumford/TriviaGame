@@ -15,9 +15,9 @@ h1 {
 #results{
     min-height: 60px;
 
-}
+} 
 
-img{
+ img{
     margin-bottom: 20px;
     border-style: groove;
     border-width: 5px;
@@ -53,4 +53,6 @@ img{
 .last-seconds{
     color:rgb(176, 2, 2);
 }
+
+
 

@@ -1,12 +1,9 @@
 //ADDITIONAL FUN THINGS TO ADD
 //1. Victory Song at end with results page
-//2. Song of defeat if player get 4 or less questions correct
-
-
+//2. Song of defeat if player gets 4 or less questions correct
 
 $(document).ready(function () {
     $("#remaining-time").hide();
-    //On Click Listener for User to Press Start Button
     $("#start").on('click', trivia.startGame);
     $(document).on('click', '.option', trivia.guessCheck);
 
@@ -44,7 +41,7 @@ let trivia = {
         q6: "What Rockstar famously snorted his fathers ashes?",
         q7: "From what famous band did P.Diddy (aka Puff Daddy) sample from for the 1998 Godzilla soundtrack?",
         q8: "Before becoming the Prince of Darkness what was Ozzy Osbourne's occupation",
-        q9: "What guitar players definitive sound can be attributed to the loss of his finger tips in a factory accident?",
+        q9: "What band's credited for the soundtrack of Terminator 2: Judgement Day?",
         q10: "What is the name of B.B. King's legendary guitar?",
     },
     //Array Of Potential Answers
@@ -52,12 +49,12 @@ let trivia = {
         q1: ['Keith Moon', 'Jason Bonham', 'John Paul Jones', 'John Bonham'],
         q2: ['Helicopter Crash', 'Overdose', 'Cancer', 'Gunshot'],
         q3: ['Kurt Cobain', 'Jim Morrison', 'Duane Allman', 'Jimi Hendrix'],
-        q4: ['Chris Robinson', 'Eddie Veddar', 'Willie Nelson', 'Gene Simmons'],
+        q4: ['Chris Robinson', 'Eddie Vedder', 'Willie Nelson', 'Gene Simmons'],
         q5: ['Pearl Jam', 'Guns N Roses', 'Rage Against The Machine', ' Black Sabbath'],
         q6: ['Jimmy Page', 'Eric Clapton', 'George Harrison', 'Keith Richards'],
         q7: ['Led Zeppelin', 'The Beatles', 'Guns N Roses', 'Nirvana'],
         q8: ['Retail Clerk', 'Factory Worker', 'Coal Miner', 'Burglar'],
-        q9: ['Eric Clapton', 'Tony Iommi', 'Eddie Van Halen', 'Ronnie Van Zant'],
+        q9: ['Nirvana', 'Soundgarden', 'Red Hot Chili Peppers', "Guns N' Roses"],
         q10: ['Mustang-Sally', 'Beatrice', 'Trigger', 'Lucille'],
     },
     //Answers to Questions 
@@ -65,39 +62,37 @@ let trivia = {
         'John Bonham',
         'Helicopter Crash',
         'Duane Allman',
-        'Eddie Veddar',
+        'Eddie Vedder',
         'Rage Against The Machine',
         'Keith Richards',
         'Led Zeppelin',
         'Burglar',
-        'Tony Iommi',
+        "Guns N' Roses",
         'Lucille',
     ],
     gifSearchTerms: [
         'John Bonham',
         'Helicopter Crash',
         'The Allman Brothers',
-        'Pearl Jam',
+        'Eddie Vedder',
         'Rage Against The Machine',
         'Keith Richards',
         'Led Zeppelin',
         'Hamburglar',
-        'Guitar',
+        "Guns N' Roses",
         'BB King',
     ],
     gifs: [],
 
+/////////////////////////////////////////////////////////////////
     //Initialize Game Method
     startGame: function () {
-
         trivia.gifSearchTerms.forEach((item, index) => {
             item = item.toLowerCase().replace(' ', '+');
             giphy.search(item).then((giphyUrl) => {
-
                 trivia.gifs[index] = giphyUrl;
             });
         });
-
         //Restarting the game results
         trivia.currentSet = 0;
         trivia.correct = 0;
@@ -115,11 +110,10 @@ let trivia = {
         $('#start').hide();
         //Show Remaining Time
         $('#remaining-time').show();
-        //$('#remaining-time').addClass('timer-active');
         //Ask Question
         trivia.nextQuestion();
     },
-
+    
     nextQuestion: function () {
         //Setting Time per Question
         trivia.timer = 10;
@@ -133,34 +127,30 @@ let trivia = {
         //Collects questions then writes current question
         let questionContent = Object.values(trivia.questions)[trivia.currentSet];
         $('#question').text(questionContent);
-
-        //Variable set equal to the answer choices from Options Array
-        let questionOptions = Object.values(trivia.options)[trivia.currentSet];
-
-        //Makes Trivia Guess Options in HTML
+        //Variable set to the answer choices from Options Array
+        let questionOptions = Object.values(trivia.options)[trivia.currentSet]; 
+        //Makes Guess Options in HTML
         $.each(questionOptions, function (index, key) {
             $('#options').append($('<button class="option btn btn-info btn-lg">' + key + '</button>'));
         })
     },
-    //Decrementing counter & mark question unanswered if time runs out.
     timerRunning: function () {
-
         if (trivia.timer > -1 && trivia.currentSet < Object.keys(trivia.questions).length) {
             $('#timer').text(trivia.timer);
             trivia.timer--;
-            if (trivia.timer === 4) {
+            if (trivia.timer === 2) {
                 $('#timer').addClass('last-seconds');
             }
         }
-        //Time ran out and unanswered gets incremented by one
+        //Time's up & unanswered gets incremented by one
         else if (trivia.timer === -1) {
             trivia.unanswered++;
             trivia.result = false;
-            clearInterval(trivia.timerId);
+            // clearInterval(trivia.timerId);
             resultId = setTimeout(trivia.guessResult, 1000);
             $('#results').html("<h3>Time's Up! The answer was  " + Object.values(trivia.answers)[trivia.currentSet] + "</h3>");
-        } else if (trivia.currentSet === Object.keys(trivia.questions).length) {
-
+        }
+        else if (trivia.currentSet === Object.keys(trivia.questions).length) {
             //Pushes results of game to the page
             $('#results')
                 .html('<h3>Thanks for playing!</h3>' +
@@ -168,52 +158,39 @@ let trivia = {
                     '<p>Incorrect: ' + trivia.incorrect + '</p>' +
                     '<p>Unaswered: ' + trivia.unanswered + '</p>' +
                     '<p>Please play again!</p>');
-
             $('#game').hide();
             $('#start').show();
-
         }
     },
 
     guessCheck: function () {
         let resultId;
-
         let currentAnswer = trivia.answers[trivia.currentSet];
-
-        //this - is referring to resultId and is looking to see if answer(this) is equal to the current question.
         if ($(this).text() === currentAnswer) {
             $(this).addClass('btn-success').removeClass('btn-info');
-
-            //Adding to correct answers
+            //Incrementing correct answers
             trivia.correct++;
-
             //Setting time the gif will run
             resultId = setTimeout(trivia.guessResult, 4500)
-
             let htmlString = `<img src="${trivia.gifs[trivia.currentSet]}" />`;
             $('#results').html(htmlString);
         } else {
             $(this).addClass('btn-danger').removeClass('btn-info');
-
             trivia.incorrect++;
-
-            //commenting this out keeps the timer moving when wrong answer chosen -> clearInterval(trivia.timerId);
             resultId = setTimeout(trivia.guessResult, 4500)
             let wrongAnswer = `<h3>The answer was ${currentAnswer} </h3>`;
-            $('#results').html(wrongAnswer); //This line doesn't disappear
+            $('#results').html(wrongAnswer); 
         }
     },
 
     guessResult: function () {
-
-        trivia.currentSet++;
-
-        $('.option').remove();
-        $('#results img').remove();
-        $('#results h3').remove();
-
-
-        trivia.nextQuestion();
+        if(trivia.timer === -1) {
+            trivia.currentSet++;
+            $('.option').remove();
+            $('#results img').remove();
+            $('#results h3').remove();
+            trivia.nextQuestion();
+        }
     }
 
 };
